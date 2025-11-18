@@ -1,0 +1,13 @@
+# Files without extension type
+*
+!/**/
+!*.*
+
+# Other files
+!Makefile
+.vscode
+*.exe
+*.out
+*.o
+*.a
+*.so
