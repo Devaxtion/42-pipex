@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2025/11/19 14:53:50 by leramos-         ###   ########.fr        #
+#    Updated: 2025/11/20 12:44:49 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main exit utils parsing
+FILES = main exit utils parsing execute
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = $(NAME)
 
