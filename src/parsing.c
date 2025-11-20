@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:28:35 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/19 15:13:15 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/11/20 12:34:38 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,25 @@ static char	*find_cmd_path(char **path_envp, char *cmd)
 	return (NULL);
 }
 
+static t_cmd	parse_single_cmd(char *cmd_str, char **path_envp)
+{
+	t_cmd	cmd;
+
+	cmd.args = ft_split(cmd_str, ' ');
+	cmd.path = find_cmd_path(path_envp, cmd.args[0]);
+	free(cmd.args[0]);
+	cmd.args[0] = cmd.path;
+	return (cmd);
+}
+
 void	parse_cmds(t_pipex *data, char **av, char **envp)
 {
 	char	**path_envp;
 
 	path_envp = get_path_envp(envp);
-	
-	// av[2] == "grep main"
-	// av[3] == "wc -l"
-
-	// 1. transform av[i] to ft_split(av[i], ' ')
-	// cmd1 = ["grep", "main"]
-	// cmd2 = ["wc", "-l"]
-	data->cmd1.args = ft_split(av[2], ' ');
-	data->cmd2.args = ft_split(av[3], ' ');
-
-	// 2. find path of cmd[0]
-	data->cmd1.path = find_cmd_path(path_envp, data->cmd1.args[0]);
-	data->cmd2.path = find_cmd_path(path_envp, data->cmd1.args[0]);
-
-	// 3. replace cmd[0] with the found path (freeing first cmd[0])
-	// cmd1 = ["usr/bin/grep", "main"]
-	// cmd2 = ["usr/bin/wc", "-l"]
-	free(data->cmd1.args[0]);
-	free(data->cmd2.args[0]);
-	data->cmd1.args[0] = data->cmd1.path;
-	data->cmd2.args[0] = data->cmd2.path;
+	if (!path_envp)
+		return ;
+	data->cmd1 = parse_single_cmd(av[2], path_envp);
+	data->cmd2 = parse_single_cmd(av[3], path_envp);
+	free(path_envp);
 }
