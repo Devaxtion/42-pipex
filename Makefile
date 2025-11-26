@@ -27,7 +27,7 @@ AR = ar rcs
 RM = rm -f
 
 # Files
-FILES = main exit utils parsing execute
+FILES = main exit utils initializing execute
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 OUT_FILE = $(NAME)
 

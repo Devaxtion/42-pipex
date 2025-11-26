@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   initializing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -53,4 +53,17 @@ void	parse_cmds(t_pipex *data, char **av, char **envp)
 	data->cmd1 = parse_single_cmd(av[2], path_envp);
 	data->cmd2 = parse_single_cmd(av[3], path_envp);
 	free(path_envp);
+}
+
+void	init_files(t_pipex *data, int ac, char **av)
+{
+	if (ac != 5)
+		cleanup_and_exit(ERR_INVALID_ARGUMENTS, "Correct parameters: infile cmd1 cmd2 outfile", NULL);
+	data.in_fd = open(av[1], O_RDONLY);
+	if (data.in_fd == -1)
+		cleanup_and_exit(ERR_CANT_OPEN_IN, "Couldn't open input file.", &data);
+
+	data.out_fd = open(av[4], O_CREAT | O_WRONLY, 0644);
+	if (data.out_fd == -1)
+		cleanup_and_exit(ERR_CANT_OPEN_OUT, "Couldn't open output file.", &data);
 }

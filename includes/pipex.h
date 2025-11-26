@@ -67,7 +67,8 @@ void	print_array(char **array, char *name);
 int		find_prefix_in_array(char **array, char *prefix);
 int		find_word_in_array(char	**array, char *word);
 
-// Parsing
+// Initializing
+void	init_files(t_pipex *data, int ac, char **av);
 void	parse_cmds(t_pipex *data, char **av, char **envp);
 
 // Execute
