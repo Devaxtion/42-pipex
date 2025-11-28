@@ -17,7 +17,8 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex	data;
 
-	init_files(&data, ac, av);
+	init_data(&data);
+	open_files(&data, ac, av);
 	parse_cmds(&data, av, envp);
 	execute_pipex(data, envp);
 	return (0);

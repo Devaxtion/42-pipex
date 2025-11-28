@@ -37,6 +37,10 @@
 # define ERR_INVALID_ARGUMENTS 1
 # define ERR_CANT_OPEN_IN 2
 # define ERR_CANT_OPEN_OUT 3
+# define ERR_CANT_FIND_CMD 4
+# define ERR_CANT_GET_PATH_ENVP 5
+# define ERR_ALLOC 6
+# define ERR_CMD_EMPTY 7
 
 // FDs
 
@@ -56,9 +60,11 @@ typedef struct s_pipex
 	t_cmd	cmd2;
 	int		in_fd;
 	int		out_fd;
+	char	**path_envp;
 }			t_pipex;
 
 // Exit
+void	free_cmd(t_cmd *cmd);
 void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data);
 
 // Utils
@@ -68,7 +74,8 @@ int		find_prefix_in_array(char **array, char *prefix);
 int		find_word_in_array(char	**array, char *word);
 
 // Initializing
-void	init_files(t_pipex *data, int ac, char **av);
+void	init_data(t_pipex *data);
+void	open_files(t_pipex *data, int ac, char **av);
 void	parse_cmds(t_pipex *data, char **av, char **envp);
 
 // Execute

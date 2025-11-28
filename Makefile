@@ -48,12 +48,10 @@ $(NAME): $(OBJS) $(LIBFT_LIB)
 
 clean:
 	@make -C $(LIBFT_DIR) clean
-	@make -C $(MLX_DIR) clean
 	$(RM) $(OBJS)
 
 fclean: clean
 	@make -C $(LIBFT_DIR) fclean
-	@make -C $(MLX_DIR) clean
 	$(RM) $(NAME)
 
 re: fclean all
