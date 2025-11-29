@@ -75,10 +75,10 @@ int		find_word_in_array(char	**array, char *word);
 
 // Initializing
 void	init_data(t_pipex *data);
-void	open_files(t_pipex *data, int ac, char **av);
-void	parse_cmds(t_pipex *data, char **av, char **envp);
+void	open_files(t_pipex *data, char **av);
+void	parse_args(t_pipex *data, char **av, char **envp);
 
 // Execute
-void	execute_pipex(t_pipex data, char **envp);
+void	execute_pipex(t_pipex *data);
 
 #endif
