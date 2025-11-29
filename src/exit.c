@@ -54,7 +54,7 @@ static void	free_data(t_pipex *data)
 	if (data->in_fd)
 		free_fd(data->in_fd);
 	if (data->out_fd)
-		free_fd(data->in_fd);
+		free_fd(data->out_fd);
 	free_cmd(&data->cmd1);
 	free_cmd(&data->cmd2);
 	if (data->path_envp)

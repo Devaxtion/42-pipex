@@ -18,6 +18,8 @@ static char	*find_cmd_path(char **path_envp, char *cmd)
 	char	*tmp;
 	int		i;
 
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
 	i = 0;
 	while (path_envp[i])
 	{
@@ -69,7 +71,7 @@ void	open_files(t_pipex *data, char **av)
 	data->in_fd = open(av[1], O_RDONLY);
 	if (data->in_fd == -1)
 		cleanup_and_exit(ERR_CANT_OPEN_IN, "Couldn't open input file.", data);
-	data->out_fd = open(av[4], O_CREAT | O_WRONLY, 0644);
+	data->out_fd = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (data->out_fd == -1)
 		cleanup_and_exit(ERR_CANT_OPEN_OUT, "Couldn't open output file.", data);
 }

@@ -41,6 +41,8 @@
 # define ERR_CANT_GET_PATH_ENVP 5
 # define ERR_ALLOC 6
 # define ERR_CMD_EMPTY 7
+# define ERR_PIPE_FAIL 8
+# define ERR_FORK_FAIL 9
 
 // FDs
 
