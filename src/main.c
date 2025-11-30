@@ -16,13 +16,14 @@
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex	data;
+	int		status;
 
 	if (ac != 5)
-		cleanup_and_exit(ERR_INVALID_ARGUMENTS, "Correct parameters: infile cmd1 cmd2 outfile", NULL);
+		cleanup_and_exit(ERR_INVALID_ARGS, "Use: infile c1 c2 outfile", NULL);
 	init_data(&data);
 	open_files(&data, av);
 	parse_args(&data, av, envp);
-	execute_pipex(&data);
-	cleanup_and_exit(0, NULL, &data);
+	status = execute_pipex(&data);
+	cleanup_and_exit(status, NULL, &data);
 	return (0);
 }

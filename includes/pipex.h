@@ -34,15 +34,17 @@
 # include "get_next_line.h"
 
 // Errors
-# define ERR_INVALID_ARGUMENTS 1
-# define ERR_CANT_OPEN_IN 2
-# define ERR_CANT_OPEN_OUT 3
-# define ERR_CANT_FIND_CMD 4
-# define ERR_CANT_GET_PATH_ENVP 5
-# define ERR_ALLOC 6
-# define ERR_CMD_EMPTY 7
-# define ERR_PIPE_FAIL 8
-# define ERR_FORK_FAIL 9
+# define ERR_NO_PERMS 1
+# define ERR_INVALID_ARGS 2
+# define ERR_CANT_OPEN_IN 3
+# define ERR_CANT_OPEN_OUT 4
+# define ERR_CANT_FIND_CMD 127
+# define ERR_CANT_GET_PATH_ENVP 6
+# define ERR_ALLOC 7
+# define ERR_CMD_EMPTY 127
+# define ERR_PIPE_FAIL 9
+# define ERR_FORK_FAIL 10
+# define ERR_EXECVE_FAIL 127
 
 // FDs
 
@@ -66,6 +68,7 @@ typedef struct s_pipex
 }			t_pipex;
 
 // Exit
+void	free_str_array(char **array);
 void	free_cmd(t_cmd *cmd);
 void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data);
 
@@ -81,6 +84,6 @@ void	open_files(t_pipex *data, char **av);
 void	parse_args(t_pipex *data, char **av, char **envp);
 
 // Execute
-void	execute_pipex(t_pipex *data);
+int		execute_pipex(t_pipex *data);
 
 #endif

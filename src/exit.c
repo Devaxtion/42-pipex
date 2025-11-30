@@ -12,12 +12,12 @@
 
 #include "pipex.h"
 
-static void	free_str_array(char **array)
+void	free_str_array(char **array)
 {
 	int	i;
 
 	if (!array)
-		return;
+		return ;
 	i = 0;
 	while (array[i])
 	{
@@ -36,7 +36,7 @@ static void	free_fd(int fd)
 void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
-		return;
+		return ;
 	if (cmd->args)
 	{
 		free_str_array(cmd->args);
@@ -68,7 +68,6 @@ void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data)
 {
 	if (data)
 		free_data(data);
-
 	if (status_code != 0)
 	{
 		ft_printf("Error\n");
