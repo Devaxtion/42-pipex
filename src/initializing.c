@@ -21,7 +21,6 @@ void	parse_args(t_pipex *data, char **av)
 		parse_fake_cmd(&data->cmd1, data);
 	}
 	parse_single_cmd(av[3], &data->cmd2, data);
-	ft_printf("THIS IS AV %s and THIS IS CMD %s\n", av[3], data->cmd2.args[0]);
 	if (data->cmd2.args == NULL || data->cmd2.path == NULL)
 		cleanup_and_exit(ERR_CANT_FIND_CMD, "Couldn't find the command", data);
 }
