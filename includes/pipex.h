@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:06 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/01 14:15:03 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/01 16:55:32 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 
 // O_RDONLY, O_CREAT, O_WRONLY, O_TRUNC
-#include <fcntl.h>
+# include <fcntl.h>
 
 // malloc, free, exit
 # include <stdlib.h>
@@ -67,7 +67,7 @@ typedef struct s_pipex
 	t_cmd	cmd2;
 	int		in_fd;
 	int		out_fd;
-	char	**path_envp;
+	char	**envp;
 }			t_pipex;
 
 // Exit
@@ -81,12 +81,16 @@ void	print_array(char **array, char *name);
 int		find_prefix_in_array(char **array, char *prefix);
 int		find_word_in_array(char	**array, char *word);
 
+// Commands
+void	parse_single_cmd(char *cmd_str, t_cmd *cmd, t_pipex *data);
+void	parse_fake_cmd(t_cmd *cmd, t_pipex *data);
+
 // Initializing
-void	init_data(t_pipex *data);
+void	init_data(t_pipex *data, char **envp);
 void	open_files(t_pipex *data, char **av);
-void	parse_args(t_pipex *data, char **av, char **envp);
+void	parse_args(t_pipex *data, char **av);
 
 // Execute
-int		execute_pipex(t_pipex *data, char **envp);
+int		execute_pipex(t_pipex *data);
 
 #endif

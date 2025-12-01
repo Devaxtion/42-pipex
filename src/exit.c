@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:16:09 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/19 15:13:09 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/01 16:31:24 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
+	ft_printf("1\n");
 	if (cmd->args)
 	{
 		free_str_array(cmd->args);
-		cmd->args = NULL;
+		ft_printf("2\n");
 	}
 	if (cmd->path)
 	{
@@ -57,11 +58,6 @@ static void	free_data(t_pipex *data)
 		free_fd(data->out_fd);
 	free_cmd(&data->cmd1);
 	free_cmd(&data->cmd2);
-	if (data->path_envp)
-	{
-		free_str_array(data->path_envp);
-		data->path_envp = NULL;
-	}
 }
 
 void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data)
