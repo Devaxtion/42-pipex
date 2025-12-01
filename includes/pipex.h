@@ -77,7 +77,6 @@ void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data);
 
 // Utils
 char	**get_path_envp(char **envp);
-void	print_array(char **array, char *name);
 int		find_prefix_in_array(char **array, char *prefix);
 int		find_word_in_array(char	**array, char *word);
 

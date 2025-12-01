@@ -65,16 +65,3 @@ int	find_word_in_array(char	**array, char *word)
 	}
 	return (-1);
 }
-
-void	print_array(char **array, char *name)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		ft_printf("%s[%i] = %s\n", name, i, array[i]);
-		i++;
-	}
-	ft_printf("\n");
-}
