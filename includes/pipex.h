@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:06 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/20 13:23:03 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:15:03 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 // access, dup, dup2, execve
 // fork, pipe, unlink
 # include <unistd.h>
+
+// O_RDONLY, O_CREAT, O_WRONLY, O_TRUNC
+#include <fcntl.h>
 
 // malloc, free, exit
 # include <stdlib.h>
@@ -84,6 +87,6 @@ void	open_files(t_pipex *data, char **av);
 void	parse_args(t_pipex *data, char **av, char **envp);
 
 // Execute
-int		execute_pipex(t_pipex *data);
+int		execute_pipex(t_pipex *data, char **envp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:37:06 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/20 12:46:45 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:12:13 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 	init_data(&data);
 	open_files(&data, av);
 	parse_args(&data, av, envp);
-	status = execute_pipex(&data);
+	status = execute_pipex(&data, envp);
 	cleanup_and_exit(status, NULL, &data);
 	return (0);
 }
