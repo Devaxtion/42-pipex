@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:06 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/02 16:07:49 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:12:28 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,10 @@
 # include "get_next_line.h"
 
 // Errors
-# define ERR_NO_PERMS 1
+# define ERR_CANT_OPEN_IN 1
+# define ERR_CANT_OPEN_OUT 1
 # define ERR_INVALID_ARGS 2
-# define ERR_CANT_OPEN_IN 3
-# define ERR_CANT_OPEN_OUT 4
 # define ERR_CANT_FIND_CMD 127
-# define ERR_CANT_GET_PATH_ENVP 6
-# define ERR_ALLOC 7
-# define ERR_CMD_EMPTY 127
 # define ERR_PIPE_FAIL 9
 # define ERR_FORK_FAIL 10
 # define ERR_EXECVE_FAIL 127
@@ -74,7 +70,7 @@ typedef struct s_pipex
 // Exit
 void	free_str_array(char **array);
 void	free_cmd(t_cmd *cmd);
-void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data);
+void	cleanup_and_exit(int status_code, char *error_msg);
 
 // Utils
 void	close_pipe(int pipefd[2]);
@@ -84,7 +80,6 @@ int		find_word_in_array(char	**array, char *word);
 
 // Commands
 void	parse_single_cmd(char *cmd_str, t_cmd *cmd, t_pipex *data);
-void	parse_fake_cmd(t_cmd *cmd, t_pipex *data);
 
 // Execute
 void	run_command(int in_fd, int out_fd, t_cmd cmd, t_pipex *data);

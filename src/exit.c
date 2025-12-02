@@ -6,16 +6,16 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:16:09 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/02 16:09:55 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:12:27 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	print_to_stderr(const char *str)
+static void	print_to_stderr(char *str)
 {
-	write(2, str, ft_strlen(str));
-	write(2, "\n", 1);
+	ft_putstr_fd(str, 2);
+	ft_putchar_fd('\n', 2);
 }
 
 void	free_str_array(char **array)
@@ -46,12 +46,15 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
-void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data)
+void	cleanup_and_exit(int status_code, char *error_msg)
 {
-	if (data)
-		;
 	if (status_code != 0 && error_msg)
 	{
+		if (status_code == 127)
+		{
+			print_to_stderr("Command not found");
+			exit(status_code);
+		}
 		if (errno != 0)
 		{
 			perror(error_msg);

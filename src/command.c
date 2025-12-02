@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:36:38 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/02 16:22:03 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:12:28 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static char	*get_cmd_path(char *cmd, char **path_envp)
 		free(cmd_path);
 		i++;
 	}
-	perror(cmd);
 	return (NULL);
 }
 
@@ -73,12 +72,4 @@ void	parse_single_cmd(char *cmd_str, t_cmd *cmd, t_pipex *data)
 	cmd->path = parse_cmd_path(cmd->args[0], data->envp);
 	if (cmd->path == NULL)
 		return ;
-}
-
-void	parse_fake_cmd(t_cmd *cmd, t_pipex *data)
-{
-	cmd->args = ft_split("false", ' ');
-	cmd->path = ft_strdup("/usr/bin/false");
-	if (!cmd->args || !cmd->path)
-		cleanup_and_exit(ERR_ALLOC, "Memory allocation failed", data);
 }

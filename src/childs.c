@@ -6,17 +6,16 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:15 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/02 16:20:11 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:26:04 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	create_first_child(t_pipex *data, int *pipefd)
+static int	create_first_child(t_pipex *data, int *pipefd, t_cmd cmd)
 {
 	int		pid;
 	int		infile;
-	t_cmd	cmd;
 
 	pid = fork();
 	if (pid == 0)
@@ -26,24 +25,26 @@ static int	create_first_child(t_pipex *data, int *pipefd)
 		if (infile == -1)
 		{
 			close(pipefd[1]);
-			cleanup_and_exit(ERR_CANT_OPEN_IN, data->av[1], data);
+			perror("");
+			cleanup_and_exit(ERR_CANT_OPEN_IN, data->av[1]);
 		}
 		parse_single_cmd(data->av[2], &cmd, data);
 		if (cmd.args == NULL || cmd.path == NULL)
 		{
+			close(infile);
+			close(pipefd[1]);
 			free_cmd(&cmd);
-			cleanup_and_exit(ERR_CANT_FIND_CMD, "Can't find the cmd", data);
+			cleanup_and_exit(ERR_CANT_FIND_CMD, "Command not found");
 		}
 		run_command(infile, pipefd[1], cmd, data);
 	}
 	return (pid);
 }
 
-static int	create_second_child(t_pipex *data, int *pipefd)
+static int	create_second_child(t_pipex *data, int *pipefd, t_cmd cmd)
 {
 	int		pid;
 	int		outfile;
-	t_cmd	cmd;
 
 	pid = fork();
 	if (pid == 0)
@@ -53,13 +54,16 @@ static int	create_second_child(t_pipex *data, int *pipefd)
 		if (outfile == -1)
 		{
 			close(pipefd[0]);
-			cleanup_and_exit(ERR_NO_PERMS, NULL, data);
+			perror("");
+			cleanup_and_exit(ERR_CANT_OPEN_OUT, NULL);
 		}
 		parse_single_cmd(data->av[3], &cmd, data);
 		if (cmd.args == NULL || cmd.path == NULL)
 		{
+			close(outfile);
+			close(pipefd[0]);
 			free_cmd(&cmd);
-			cleanup_and_exit(ERR_CANT_FIND_CMD, "Can't find the cmd", data);
+			cleanup_and_exit(ERR_CANT_FIND_CMD, "Command not found");
 		}
 		run_command(pipefd[0], outfile, cmd, data);
 	}
@@ -70,12 +74,16 @@ static int	create_second_child(t_pipex *data, int *pipefd)
 // Child 2 (pids[1]) - reads from pipe, writes to output file
 void	create_childs(t_pipex *data)
 {
-	data->pids[0] = create_first_child(data, data->pipefd);
+	t_cmd	cmd;
+
+	cmd.path = NULL;
+	cmd.args = NULL;
+	data->pids[0] = create_first_child(data, data->pipefd, cmd);
 	if (data->pids[0] == -1)
-		cleanup_and_exit(ERR_FORK_FAIL, "Fork 1 failed", data);
-	data->pids[1] = create_second_child(data, data->pipefd);
+		cleanup_and_exit(ERR_FORK_FAIL, "Fork 1 failed");
+	data->pids[1] = create_second_child(data, data->pipefd, cmd);
 	if (data->pids[1] == -1)
-		cleanup_and_exit(ERR_FORK_FAIL, "Fork 2 failed", data);
+		cleanup_and_exit(ERR_FORK_FAIL, "Fork 2 failed");
 }
 
 void	wait_for_childs(int pids[2], int status[2])
