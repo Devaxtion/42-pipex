@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:36:38 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/01 16:54:01 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 16:22:03 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static char	*get_cmd_path(char *cmd, char **path_envp)
 	char	*tmp;
 	int		i;
 
+	if (!cmd || !*cmd)
+		return (NULL);
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	i = 0;
@@ -31,6 +33,7 @@ static char	*get_cmd_path(char *cmd, char **path_envp)
 		free(cmd_path);
 		i++;
 	}
+	perror(cmd);
 	return (NULL);
 }
 

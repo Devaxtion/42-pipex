@@ -6,11 +6,17 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:16:09 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/01 16:31:24 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 16:09:55 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	print_to_stderr(const char *str)
+{
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+}
 
 void	free_str_array(char **array)
 {
@@ -27,22 +33,12 @@ void	free_str_array(char **array)
 	free(array);
 }
 
-static void	free_fd(int fd)
-{
-	if (fd > 0)
-		close(fd);
-}
-
 void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	ft_printf("1\n");
 	if (cmd->args)
-	{
 		free_str_array(cmd->args);
-		ft_printf("2\n");
-	}
 	if (cmd->path)
 	{
 		free(cmd->path);
@@ -50,25 +46,19 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
-static void	free_data(t_pipex *data)
-{
-	if (data->in_fd)
-		free_fd(data->in_fd);
-	if (data->out_fd)
-		free_fd(data->out_fd);
-	free_cmd(&data->cmd1);
-	free_cmd(&data->cmd2);
-}
-
 void	cleanup_and_exit(int status_code, const char *error_msg, t_pipex *data)
 {
 	if (data)
-		free_data(data);
-	if (status_code != 0)
+		;
+	if (status_code != 0 && error_msg)
 	{
-		ft_printf("Error\n");
-		if (error_msg)
-			ft_printf("%s\n", error_msg);
+		if (errno != 0)
+		{
+			perror(error_msg);
+			exit(errno);
+		}
+		else
+			print_to_stderr(error_msg);
 	}
 	exit(status_code);
 }

@@ -6,11 +6,17 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:29:48 by leramos-          #+#    #+#             */
-/*   Updated: 2025/11/19 15:01:10 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 16:07:43 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	close_pipe(int pipefd[2])
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+}
 
 char	**get_path_envp(char **envp)
 {
