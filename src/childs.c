@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:15 by leramos-          #+#    #+#             */
-/*   Updated: 2025/12/02 17:26:04 by leramos-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:49:18 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ void	create_childs(t_pipex *data)
 
 void	wait_for_childs(int pids[2], int status[2])
 {
-	waitpid(pids[0], &status[0], 0);
-	waitpid(pids[1], &status[1], 0);
+	int	i;
+	int	temp_pid;
+	int	temp_status;
+
+	status[0] = 0;
+	status[1] = 0;
+	i = 0;
+	while (i < 2)
+	{
+		temp_pid = waitpid(-1, &temp_status, 0);
+		if (temp_pid == -1)
+			continue ;
+		if (temp_pid == pids[0])
+			status[0] = temp_status;
+		else if (temp_pid == pids[1])
+			status[1] = temp_status;
+		i++;
+	}
 }
